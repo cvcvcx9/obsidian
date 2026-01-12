@@ -6,8 +6,8 @@ kanban-plugin: board
 
 ## 시작 전
 
+- [ ] application.yml 환경 분리
 - [ ] 차트관련ERD작성
-- [ ] 도메인주도개발관련학습
 - [ ] Redis Docker 구성
 - [ ] Binance API key 발급
 - [ ] BTCUSDT 5분봉 API 테스트
@@ -21,12 +21,11 @@ kanban-plugin: board
 - [ ] 최근 가격 조회
 - [ ] 응답 DTO 설계
 - [ ] 성능용 인덱스
-- [ ] git ignore 설정
 
 
 ## 진행중
 
-- [ ] application.yml 환경 분리
+- [ ] git ignore 설정
 
 
 ## 완료됨
