@@ -24,12 +24,12 @@ kanban-plugin: board
 
 ## 진행중
 
-- [ ] 차트관련ERD작성
-- [ ] git ignore 설정
 
 
 ## 완료됨
 
+- [ ] 차트관련ERD작성
+- [ ] git ignore 설정
 - [ ] 로컬 실행 확인
 - [ ] PostgreSQL 도커 구성
 - [ ] 회원ERD작성
