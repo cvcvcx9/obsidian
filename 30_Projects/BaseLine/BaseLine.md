@@ -1,14 +1,14 @@
 ### **[Step 1] 환경 구축 및 인프라 (기반 잡기)**
 
-- [ ] **Spring Boot 프로젝트 생성:** Java 17+, Spring Boot 3.1+ 버전으로 프로젝트 생성.
+- [x] **Spring Boot 프로젝트 생성:** Java 17+, Spring Boot 3.1+ 버전으로 프로젝트 생성.
     
-- [ ] **의존성(Dependencies) 추가:** `Web`, `Data JPA`, `PostgreSQL`, `Docker Compose Support`, `Mustache`, `Lombok`, `Kafka` 설정.
+- [x] **의존성(Dependencies) 추가:** `Web`, `Data JPA`, `PostgreSQL`, `Docker Compose Support`, `Mustache`, `Lombok`, `Kafka` 설정.
     
-- [ ] **보안 환경 설정:** 프로젝트 루트에 `.env` 파일을 생성하고 DB 접속 정보(`USER`, `PASSWORD`, `DB_NAME`) 정의.
+- [x] **보안 환경 설정:** 프로젝트 루트에 `.env` 파일을 생성하고 DB 접속 정보(`USER`, `PASSWORD`, `DB_NAME`) 정의.
     
-- [ ] **Docker Compose 구성:** `docker-compose.yml` 작성 및 PostgreSQL/Kafka 컨테이너 설정.
+- [x] **Docker Compose 구성:** `docker-compose.yml` 작성 및 PostgreSQL/Kafka 컨테이너 설정.
     
-- [ ] **연동 테스트:** 애플리케이션 실행 시 도커 컨테이너가 자동으로 뜨고 DB에 연결되는지 확인.
+- [x] **연동 테스트:** 애플리케이션 실행 시 도커 컨테이너가 자동으로 뜨고 DB에 연결되는지 확인.
     
 
 ### **[Step 2] 로깅 및 데이터 도메인 설계 (운영 준비)**
