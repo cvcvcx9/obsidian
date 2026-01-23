@@ -22,7 +22,7 @@ status: 해결
 ## 🔍 원인
 - spring boot 4.0부터 기본 Jackson 라이브러리의 위치가 기존 위치에서 변경(Jackson3.0버전으로 변경되면서)
 - `Hibernate`의 경우 7.2버전까지는 `Jackson 2` 버전을 공식적으로 지원. 3.0은 지원하지 않음
-- 최신 JPA 기준으로 `HIbernate`를 사용중이기 때문에 자동설정(Auto configration) Jackson을 읽어오지 못하는 이슈 발생
+- 최신 JPA 기준으로 `HIbernate`를 사용중이기 때문에 자동설정(`Auto configration`) Jackson을 읽어오지 못하는 이슈 발생
 - 또한, `Jackson2`에서 3으로 변경되므로 시리얼라이저 위치도 3.0버전에 맞게 변경이 필요했음
 
 ## ✅ 해결방법
