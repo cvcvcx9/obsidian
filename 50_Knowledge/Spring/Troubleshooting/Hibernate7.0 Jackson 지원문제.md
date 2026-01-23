@@ -29,54 +29,68 @@ status: 해결
 
 #### 문제 1: `HibernatePropertiesCustomizer`를 이용한 매퍼 수동등록
 ```java
-package com.cvcvcx9.baseline.global.config;  
-  
-import org.hibernate.cfg.AvailableSettings;  
-import org.hibernate.type.descriptor.WrapperOptions;  
-import org.hibernate.type.descriptor.java.JavaType;  
-import org.hibernate.type.format.FormatMapper;  
-import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;  
-import org.springframework.context.annotation.Bean;  
-import org.springframework.context.annotation.Configuration;  
-import tools.jackson.databind.json.JsonMapper;  
-  
-@Configuration  
-public class JpaConfig {  
-    @Bean  
-    public HibernatePropertiesCustomizer jsonFormatMapperCustomizer(JsonMapper jsonMapper) {  
-        return hibernateProperties -> {  
-            hibernateProperties.put(AvailableSettings.JSON_FORMAT_MAPPER, new FormatMapper() {  
-  
-                @Override  
-                @SuppressWarnings("unchecked")  
-                public <T> T fromString(CharSequence charSequence, JavaType<T> javaType, WrapperOptions wrapperOptions) {  
-                    try {  
-                        if (charSequence == null || charSequence.length() == 0) return null;  
-  
-                        // 핵심 수정: (Class<T>) 캐스팅을 제거하고 java.lang.reflect.Type을 그대로 사용합니다.  
-                        // Jackson 3.0의 JsonMapper는 Type 객체를 직접 인식할 수 있습니다.                        java.lang.reflect.Type targetType = javaType.getJavaType();  
-  
-                        return jsonMapper.readValue(  
-                                charSequence.toString(),  
-                                jsonMapper.getTypeFactory().constructType(targetType)  
-                        );  
-                    } catch (Exception e) {  
-                        throw new RuntimeException("Jackson 3.0 역직렬화 실패: " + e.getMessage(), e);  
-                    }  
-                }  
-  
-                @Override  
-                public <T> String toString(T value, JavaType<T> javaType, WrapperOptions wrapperOptions) {  
-                    try {  
-                        if (value == null) return null;  
-                        return jsonMapper.writeValueAsString(value);  
-                    } catch (Exception e) {  
-                        throw new RuntimeException("Jackson 3.0 직렬화 실패", e);  
-                    }  
-                }  
-            });  
-        };  
-    }  
+package com.cvcvcx9.baseline.global.config;
+
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.type.descriptor.WrapperOptions;
+import org.hibernate.type.descriptor.java.JavaType;
+import org.hibernate.type.format.FormatMapper;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import tools.jackson.databind.json.JsonMapper; // Jackson 3.x 버전의 매퍼 패키지
+
+@Configuration // 이 클래스가 스프링의 설정 정보임을 나타냄
+public class JpaConfig {
+
+    @Bean // Hibernate 설정을 커스터마이징하는 빈을 등록
+    public HibernatePropertiesCustomizer jsonFormatMapperCustomizer(JsonMapper jsonMapper) {
+        // 스프링 컨텍스트에 등록된 Jackson 3.0의 JsonMapper를 주입받음
+        
+        return hibernateProperties -> {
+            // Hibernate의 설정 맵(Properties)에 직접 접근하여 설정을 추가
+            hibernateProperties.put(AvailableSettings.JSON_FORMAT_MAPPER, new FormatMapper() {
+                // 'JSON_FORMAT_MAPPER' 설정에 우리가 정의한 새로운 FormatMapper를 할당함
+
+                @Override
+                @SuppressWarnings("unchecked")
+                // DB의 JSON 문자열을 자바 객체로 변환하는 메서드 (역직렬화)
+                public <T> T fromString(CharSequence charSequence, JavaType<T> javaType, WrapperOptions wrapperOptions) {
+                    try {
+                        // 입력 데이터가 비어있으면 null 반환
+                        if (charSequence == null || charSequence.length() == 0) return null;
+
+                        // Hibernate가 전달해준 타입 정보(javaType)에서 실제 자바의 리플렉션 Type 정보를 추출
+                        java.lang.reflect.Type targetType = javaType.getJavaType();
+
+                        // Jackson 3.0의 엔진을 사용하여 문자열을 해당 타입의 객체로 읽어들임
+                        return jsonMapper.readValue(
+                                charSequence.toString(),
+                                jsonMapper.getTypeFactory().constructType(targetType)
+                        );
+                    } catch (Exception e) {
+                        // 변환 실패 시 런타임 예외로 래핑하여 던짐
+                        throw new RuntimeException("Jackson 3.0 역직렬화 실패: " + e.getMessage(), e);
+                    }
+                }
+
+                @Override
+                // 자바 객체를 DB에 저장할 JSON 문자열로 변환하는 메서드 (직렬화)
+                public <T> String toString(T value, JavaType<T> javaType, WrapperOptions wrapperOptions) {
+                    try {
+                        // 객체가 null이면 null 반환
+                        if (value == null) return null;
+                        
+                        // Jackson 3.0을 사용하여 객체를 JSON 문자열로 변환
+                        return jsonMapper.writeValueAsString(value);
+                    } catch (Exception e) {
+                        // 변환 실패 시 에러 메시지와 함께 예외 발생
+                        throw new RuntimeException("Jackson 3.0 직렬화 실패", e);
+                    }
+                }
+            });
+        };
+    }
 }
 ```
-- 
+- 해당 코드는 Gemni
