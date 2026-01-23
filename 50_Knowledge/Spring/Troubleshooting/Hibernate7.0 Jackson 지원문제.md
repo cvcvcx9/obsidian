@@ -2,12 +2,14 @@
 날짜: 2026-01-23 10:59
 tags:
   - error
-환경:
-status: 미해결
+  - hibernate
+  - jackson
+환경: hibernate7.2, JPA, Jackson3.0
+status: 해결
 ---
 
 ## 🛑 에러
-> 
+> 스프링 JPA
 
 ## 🔍 원인
 - 
