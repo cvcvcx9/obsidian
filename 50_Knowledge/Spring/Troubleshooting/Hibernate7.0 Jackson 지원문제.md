@@ -98,4 +98,4 @@ public class JpaConfig {
 #### 문제2: Kafka 직렬, 역직렬화 클래스 지정
 - 단순 경로 문제였기때문에 yml에서 경로를 수정하는 것으로 해결
 - `org.springframework.kafka.support.serializer.JacksonJsonSerializer`
-- 
+- 3.0 버전부터는 JsonSerializer는 사라졌기 때문에 해당 경로를 이용할 것
