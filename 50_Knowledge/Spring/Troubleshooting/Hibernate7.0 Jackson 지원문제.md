@@ -14,7 +14,8 @@ status: 해결
 > 분명 Jackson과 같은 경우 starter(jpa)쪽에 들어있는데 지속적으로 라이브러리가 존재하지 않는다고 뜸
 
 ## 🔍 원인
-- 
+- spring boot 4.0부터 기본 Jackson 라이브러리의 위치가 기존 위치에서 변경(Jackson3.0버전으로 변경되면서)
+- Hibernate의 경우 7.2버전까지는 Jackson
 
 ## ✅ 해결방법
 ``` 여기에 해결 코드나 설정법을 적으세요.
