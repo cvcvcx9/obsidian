@@ -1,6 +1,8 @@
 ---
 날짜: <% tp.date.now("YYYY-MM-DD HH:mm") %>
-태그: [error, ]
+tags:
+  - error
+환경:
 ---
 
 ## 🛑 에러
