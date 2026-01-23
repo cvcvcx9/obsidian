@@ -79,4 +79,4 @@ public class JpaConfig {
     }  
 }
 ```
-- 해당 코드의 경우 
+- 
