@@ -1,10 +1,9 @@
----
+
 date: {{date}} {{time}}
 status: 🔴 # 🔴(미해결), 🟢(해결), 🟡(우회방법사용)
 tags: [error, language/framework]
 project: 
 error_code: 
----
 
 # 🛑 Error: {{title}}
 
