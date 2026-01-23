@@ -81,4 +81,7 @@ spring:
 
 ---
 
-#Spring  #Springboot
+## 4. 내가 해결한 방버
+
+
+#Spring  #Springboot #hibernate #최신문제 #jackson
