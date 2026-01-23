@@ -95,3 +95,7 @@ public class JpaConfig {
 ```
 - 해당 코드는 Gemini의 도움을 받아 생성한 것임을 알림
 - 해당 이슈는 현재에도 해결되고 있지 않고, `Hibernate`에서 공식적으로 지원하는 것은 7.3버전부터라고 함
+#### 문제2: Kafka 직렬, 역직렬화 클래스 지정
+- 단순 경로 문제였기때문에 yml에서 경로를 수정하는 것으로 해결
+- `org.springframework.kafka.support.serializer.JacksonJsonSerializer`
+- 
