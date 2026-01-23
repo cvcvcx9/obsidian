@@ -27,7 +27,56 @@ status: 해결
 
 ## ✅ 해결방법
 
-#### 문제 1: `HibernatePropertiesCustomizer`를 이용한 매퍼 수조
+#### 문제 1: `HibernatePropertiesCustomizer`를 이용한 매퍼 수동등록
 ```java
-
+package com.cvcvcx9.baseline.global.config;  
+  
+import org.hibernate.cfg.AvailableSettings;  
+import org.hibernate.type.descriptor.WrapperOptions;  
+import org.hibernate.type.descriptor.java.JavaType;  
+import org.hibernate.type.format.FormatMapper;  
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;  
+import org.springframework.context.annotation.Bean;  
+import org.springframework.context.annotation.Configuration;  
+import tools.jackson.databind.json.JsonMapper;  
+  
+@Configuration  
+public class JpaConfig {  
+    @Bean  
+    public HibernatePropertiesCustomizer jsonFormatMapperCustomizer(JsonMapper jsonMapper) {  
+        return hibernateProperties -> {  
+            hibernateProperties.put(AvailableSettings.JSON_FORMAT_MAPPER, new FormatMapper() {  
+  
+                @Override  
+                @SuppressWarnings("unchecked")  
+                public <T> T fromString(CharSequence charSequence, JavaType<T> javaType, WrapperOptions wrapperOptions) {  
+                    try {  
+                        if (charSequence == null || charSequence.length() == 0) return null;  
+  
+                        // 핵심 수정: (Class<T>) 캐스팅을 제거하고 java.lang.reflect.Type을 그대로 사용합니다.  
+                        // Jackson 3.0의 JsonMapper는 Type 객체를 직접 인식할 수 있습니다.                        java.lang.reflect.Type targetType = javaType.getJavaType();  
+  
+                        return jsonMapper.readValue(  
+                                charSequence.toString(),  
+                                jsonMapper.getTypeFactory().constructType(targetType)  
+                        );  
+                    } catch (Exception e) {  
+                        throw new RuntimeException("Jackson 3.0 역직렬화 실패: " + e.getMessage(), e);  
+                    }  
+                }  
+  
+                @Override  
+                public <T> String toString(T value, JavaType<T> javaType, WrapperOptions wrapperOptions) {  
+                    try {  
+                        if (value == null) return null;  
+                        return jsonMapper.writeValueAsString(value);  
+                    } catch (Exception e) {  
+                        throw new RuntimeException("Jackson 3.0 직렬화 실패", e);  
+                    }  
+                }  
+            });  
+        };  
+    }  
+}
 ```
+- 해당 코드의 경우 
