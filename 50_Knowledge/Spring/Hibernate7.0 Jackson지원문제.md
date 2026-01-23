@@ -80,3 +80,5 @@ spring:
 |`class ...StringSerializer is not an instance of ...Serializer`|Jackson 3의 시리얼라이저를 임포트했을 때 발생|`import org.apache.kafka.common.serialization.StringSerializer`로 수정|
 
 ---
+
+#Spring  #Springboot
