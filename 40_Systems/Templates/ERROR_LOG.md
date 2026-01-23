@@ -5,7 +5,6 @@ tags: [error, language/framework]
 project: 
 error_code: 
 ---
-
 # 🛑 Error: {{title}}
 
 ## 📋 에러 상황 (Context)
